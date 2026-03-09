@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Define Routes
 app.use('/api/students', require('./routes/students'));
+app.use('/api/auth', require('./routes/auth'));
 app.get('/', (req, res) => res.send('API Running'));
 
 const PORT = process.env.PORT || 5000;

@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Student = require('../models/Student');
 
+const auth = require('../middleware/auth');
+
 // @route   GET api/students
 // @desc    Get all students
-// @access  Public
-router.get('/', async (req, res) => {
+// @access  Private
+router.get('/', auth, async (req, res) => {
   try {
     const students = await Student.find().sort({ date: -1 });
     res.json(students);
@@ -17,8 +19,8 @@ router.get('/', async (req, res) => {
 
 // @route   POST api/students
 // @desc    Add new student
-// @access  Public
-router.post('/', async (req, res) => {
+// @access  Private
+router.post('/', auth, async (req, res) => {
   const { name, email, rollNumber, department, year } = req.body;
 
   try {
@@ -45,8 +47,8 @@ router.post('/', async (req, res) => {
 
 // @route   PUT api/students/:id
 // @desc    Update student
-// @access  Public
-router.put('/:id', async (req, res) => {
+// @access  Private
+router.put('/:id', auth, async (req, res) => {
   const { name, email, rollNumber, department, year } = req.body;
 
   // Build student object
@@ -77,8 +79,8 @@ router.put('/:id', async (req, res) => {
 
 // @route   DELETE api/students/:id
 // @desc    Delete student
-// @access  Public
-router.delete('/:id', async (req, res) => {
+// @access  Private
+router.delete('/:id', auth, async (req, res) => {
   try {
     let student = await Student.findById(req.params.id);
 
